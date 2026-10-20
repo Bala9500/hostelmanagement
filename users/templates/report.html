@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title>Murugan Hostel - Report</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:linear-gradient( 135deg, #0f172a, #1e3a8a, #2563eb);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+            top: -170px;
+            left: -120px;
+            z-index: 0;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background:   rgba(255,255,255,0.06);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            background:  rgba(15,23,42,0.96);
+            box-shadow:0 4px 20px  rgba(0,0,0,0.20);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            border-radius: 12px;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px  rgba(37,99,235,0.35);
+            transition: 0.3s;
+        }
+        .brand:hover .brand-logo {
+            transform:rotate(-5deg)scale(1.08);
+        }
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: #2563eb;
+        }
+
+        .nav-links .logout {
+            margin-left: 10px;
+            border: 1px solid  rgba(255,255,255,0.25);
+        }
+
+        .nav-links .logout:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1050px;
+            margin: auto;
+            min-height:calc(100vh - 75px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .report-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow:0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .report-info {
+            padding: 55px 45px;
+            background:linear-gradient( 145deg,  #0f172a,  #1e3a8a);
+            position: relative;
+            overflow: hidden;
+        }
+        .report-info::after {
+            content: "M";
+            position: absolute;
+            right: -30px;
+            bottom: -70px;
+            font-size: 260px;
+            font-weight: bold;
+            color:  rgba(255,255,255,0.04);
+        }
+
+        .report-info-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .small-title {
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .report-info h1 {
+            font-size: 38px;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .report-info p {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            margin-top: 20px;
+        }
+
+        .info-icon {
+            width: 35px;
+            height: 35px;
+            min-width: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(37,99,235,0.35);
+            border-radius: 9px;
+        }
+
+        .info-item span {
+            color: #e2e8f0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .report-form {
+            padding: 55px 45px;
+            color: #334155;
+        }
+        .report-form h2 {
+            color: #0f172a;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+        .form-subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 15px;
+            border:1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            color: #334155;
+            background: #f8fafc;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 3px  rgba(37,99,235,0.12);
+            transform:translateY(-1px);
+        }
+
+        .character-info {
+            display: block;
+            text-align: right;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+            transform:translateY(-3px);
+            box-shadow:0 8px 20px rgba(37,99,235,0.30);
+        }
+
+        .submit-btn:active {
+            transform:scale(0.98);
+        }
+
+
+        .message {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background: #dcfce7;
+            border:1px solid #86efac;
+            color: #166534;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        @media(max-width: 800px) {
+            .menu-btn {
+                display: block;
+            }
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 20px;
+                background: #0f172a;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links .logout {
+                margin-left: 0;
+            }
+
+            .report-container {
+                grid-template-columns: 1fr;
+            }
+
+
+            .report-info {
+                padding: 40px 30px;
+            }
+
+            .report-form {
+                padding: 40px 30px;
+            }
+        }
+        @media(max-width: 500px) {
+            .navbar {
+                padding: 0 5%;
+            }
+            .brand h2 {
+                font-size: 16px;
+            }
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+            }
+            main {
+                width: 92%;
+                padding: 35px 0;
+            }
+            .report-info h1 {
+                font-size: 30px;
+            }
+            .report-info,
+            .report-form {
+                padding: 35px 22px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <div class="brand-logo">M</div>
+            <h2>MURUGAN HOSTEL</h2>
+        </a>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links"id="navLinks">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'report' %}">Report</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'about' %}"class="active">About</a></li>
+            <li><a href="{% url 'logout' %}"class="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="report-container">
+            <div class="report-info">
+                <div class="report-info-content">
+                    <div class="small-title">TENANT SUPPORT</div>
+                    <h1>Report an Issue</h1>
+                    <p>Having a problem during your stay?Submit your issue here and the Murugan Hostel management team will review your report.</p>
+                    <div class="info-item">
+                        <div class="info-icon">✓</div>
+                        <span>Describe your problem clearly so that our management can understand the issue.</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✓</div>
+                        <span>Your report will initially be marked as Pending.</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✓</div>
+                        <span>Hostel management will review your complaint and take the necessary action.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="report-form">
+                <h2>Submit Report</h2>
+                <p class="form-subtitle">Tell us about the issue you are facing.</p>
+            <!-- DJANGO MESSAGES -->
+            <!-- {% if messages %}
+                {% for message in messages %}
+                    <div class="message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %} -->
+
+                
+                <form method="POST" action="{% url 'report' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="about"> About</label>
+                        <input type="text"id="about"name="about"maxlength="255"placeholder="Example: Water problem"required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description"name="description"maxlength="600"placeholder="Describe your problem in detail..."required></textarea>
+                        <span class="character-info">Maximum 600 characters</span>
+                    </div>
+                    <button type="submit"class="submit-btn">Submit Report</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script>
+    function toggleMenu() {
+        const navLinks =document.getElementById("navLinks");
+        navLinks.classList.toggle("show");
+    }
+    </script>
+</body>
+
+</html>

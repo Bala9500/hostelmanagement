@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title>Murugan Hostel - Tenant Home</title>
+    <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:linear-gradient( 135deg, #0f172a,  #1e3a8a, #2563eb);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            top: -170px;
+            left: -120px;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+            position: relative;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            color: white;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow:0 5px 15px rgba(37, 99, 235, 0.35);
+            transition: 0.3s;
+        }
+        .brand:hover .brand-logo {
+            transform:rotate(-5deg)scale(1.08);
+        }
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #2563eb;
+            transform:translateY(-2px);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: #2563eb;
+        }
+
+        .nav-links .logout {
+            margin-left: 10px;
+            border:1px solid rgba(255,255,255,0.25);
+        }
+
+        .nav-links .logout:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+        .page-container {
+            width: 88%;
+            max-width: 1250px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+            padding-bottom: 60px;
+        }
+        .notification-section {
+            padding-top: 30px;
+            animation:notificationEntry 0.5s ease;
+        }
+
+        .notification-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+        .notification-count {
+            min-width: 25px;
+            height: 25px;
+            padding: 0 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #22c55e;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .resolved-notification {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            background: white;
+            border-left:5px solid #22c55e;
+            border-radius: 12px;
+            box-shadow:0 10px 30px  rgba(0,0,0,0.18);
+            color: #334155;
+            transition: 0.3s;
+        }
+        .resolved-notification:hover {
+            transform:translateY(-3px);
+            box-shadow:0 15px 35px rgba(0,0,0,0.22);
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #dcfce7;
+            color: #16a34a;
+            border-radius: 50%;
+            font-size: 23px;
+            font-weight: bold;
+        }
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-content h4 {
+            color: #166534;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .notification-content p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .notification-content strong {
+            color: #0f172a;
+        }
+
+        .resolved-badge {
+            padding: 7px 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        @keyframes notificationEntry {
+            from {
+                opacity: 0;
+                transform:translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 65px 0;
+            overflow: hidden;
+        }
+
+
+        .hero-content {
+            width: 60%;
+            max-width: 720px;
+            position: relative;
+            z-index: 3;
+            animation:contentEntry 0.8s ease;
+        }
+        @keyframes contentEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tenant-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            margin-bottom: 20px;
+            background:  rgba(255,255,255,0.12);
+            border: 1px solid  rgba(255,255,255,0.15);
+            border-radius: 30px;
+            color: #bfdbfe;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+        .tenant-label::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            max-width: 650px;
+            font-size: 54px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #60a5fa;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .report-btn {
+            display: inline-block;
+            padding: 14px 26px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px   rgba(37,99,235,0.35);
+            transition: 0.3s;
+        }
+        .report-btn:hover {
+            background: #1d4ed8;
+            transform:translateY(-4px);
+            box-shadow: 0 12px 25px rgba(37,99,235,0.50);
+        }
+        .contact-btn {
+            display: inline-block;
+            padding: 13px 25px;
+            color: white;
+            border: 1px solid  rgba(255,255,255,0.35);
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .contact-btn:hover {
+            background:  rgba(255,255,255,0.10);
+            transform: translateY(-4px);
+        }
+
+        .background-logo {
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform:translateY(-50%);
+            width: 370px;
+            height: 370px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:  rgba(255,255,255,0.04);
+            border: 3px solid rgba(255,255,255,0.10);
+            border-radius: 80px;
+            color:  rgba(255,255,255,0.08);
+            font-size: 240px;
+            font-weight: bold;
+            user-select: none;
+            animation:logoFloat 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoFloat {
+            from {
+                transform: translateY(-50%) rotate(-3deg);
+            }
+            to {
+                transform:  translateY(-53%)rotate(3deg);
+            }
+        }
+        .quick-section {
+            padding-bottom: 70px;
+        }
+
+        .section-heading {
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .section-heading p {
+            color: #bfdbfe;
+            font-size: 14px;
+        }
+
+        .quick-info {
+            display: grid;
+            grid-template-columns:repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .info-card {
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 25px;
+            background: rgba(255,255,255,0.09);
+            border:1px solid rgba(255,255,255,0.13);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            background:  rgba(255,255,255,0.15);
+            transform: translateY(-7px);
+            box-shadow:0 15px 30px  rgba(0,0,0,0.15);
+        }
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(96,165,250,0.18);
+            border-radius: 11px;
+            color: #93c5fd;
+            font-size: 20px;
+        }
+        .info-card strong {
+            display: block;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .info-card span {
+            color: #bfdbfe;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .card-arrow {
+            color: #60a5fa;
+            font-size: 17px;
+            align-self: flex-end;
+        }
+
+        .hostel-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-bottom: 60px;
+            background: white;
+            color: #334155;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow:0 15px 40px rgba(0,0,0,0.18);
+        }
+        .strip-item {
+            padding: 25px;
+            text-align: center;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .strip-item:last-child {
+            border-right: none;
+        }
+
+        .strip-item strong {
+            display: block;
+            color: #0f172a;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .strip-item span {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        footer {
+            position: relative;
+            z-index: 3;
+            padding: 25px;
+            text-align: center;
+            background:  rgba(15,23,42,0.90);
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        @media(max-width: 950px) {
+            .hero-content {
+                width: 70%;
+            }
+            .background-logo {
+                width: 280px;
+                height: 280px;
+                font-size: 180px;
+                right: -70px;
+                opacity: 0.6;
+            }
+            .hero h1 {
+                font-size: 44px;
+            }
+        }
+        @media(max-width: 750px) {
+            .navbar {
+                padding: 0 5%;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 20px;
+                background: #0f172a;
+                box-shadow:0 10px 20px rgba(0,0,0,0.2);
+            }
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links .logout {
+                margin-left: 0;
+            }
+            .page-container {
+                width: 90%;
+            }
+            .hero {
+                min-height: auto;
+                padding: 60px 0;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .background-logo {
+                opacity: 0.25;
+            }
+
+            .quick-info {
+                grid-template-columns: 1fr;
+            }
+
+            .hostel-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .strip-item {
+                border-right: none;
+                border-bottom:1px solid #e2e8f0;
+            }
+
+            .strip-item:last-child {
+                border-bottom: none;
+            }
+
+            .resolved-notification {
+                align-items: flex-start;
+            }
+
+            .resolved-badge {
+                display: none;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .brand h2 {
+                font-size: 16px;
+            }
+
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero h1 {
+                font-size: 33px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .background-logo {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .report-btn,
+            .contact-btn {
+                text-align: center;
+            }
+
+            .resolved-notification {
+                padding: 15px;
+            }
+
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+                font-size: 19px;
+            }
+        }
+        </style>
+    </head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <div class="brand-logo">M</div>
+            <h2>MURUGAN HOSTEL</h2>
+        </a>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links"id="navLinks">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'report' %}">Report</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'about' %}"class="active">About</a></li>
+            <li><a href="{% url 'logout' %}"class="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="page-container">
+        {% if resolved_reports %}
+        <section class="notification-section">
+            <div class="notification-title">
+                <span>Notifications</span>
+                <span class="notification-count">
+                    {{ resolved_reports|length }}
+                </span>
+            </div>
+            {% for report in resolved_reports %}
+            <div class="resolved-notification">
+                <div class="notification-icon"> ✓</div>
+                <div class="notification-content">
+                    <h4>Report Resolved</h4>
+                    <p>Your report
+                        <strong>"{{ report.about }}"</strong>has been resolved by Murugan Hostel management.
+                    </p>
+                </div>
+                <span class="resolved-badge"> RESOLVED</span>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+        <main class="hero">
+            <div class="hero-content">
+                <p class="tenant-label">TENANT PORTAL</p>
+                <h1>Welcome,<span>{{ request.session.name }}!</span></h1>
+                <p class="hero-description">Welcome to Murugan Hostel, your comfortable and secure place to stay.
+                    Stay connected with hostel management and
+                    easily submit your reports whenever you need
+                    assistance.
+                    Our goal is to provide a safe, comfortable
+                    and friendly environment for every tenant.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'report' %}"class="report-btn">Submit a Report →</a>
+                    <a  href="{% url 'contact' %}"class="contact-btn"> Contact Management</a>
+                </div>
+            </div>
+            <div class="background-logo">M</div>
+        </main>
+        <section class="quick-section">
+            <div class="section-heading">
+                <h2>Quick Actions</h2>
+                <p>Easily access important hostel services</p></div>
+                <div class="quick-info">
+                    <a href="{% url 'report' %}"class="info-card">
+                        <div class="card-icon">!</div>
+                        <div><strong>Report an Issue</strong><span>Submit complaints or report hostel-related problems.</span></div>
+                        <div class="card-arrow"> →</div>
+                    </a>
+                    <a href="{% url 'contact' %}"class="info-card">
+                        <div class="card-icon">☎</div><div><strong>Contact Us</strong><span>Contact hostel management whenever you need assistance.</span></div>
+                        <div class="card-arrow">→</div>
+                    </a>
+                    <a href="{% url 'about' %}"class="info-card">
+                        <div class="card-icon">i</div>
+                        <div>
+                            <strong>Hostel Information</strong><span>Read about Murugan Hostel, facilities and hostel rules.</span>
+                        </div>
+                        <div class="card-arrow">→</div>
+                    </a>
+                </div>
+            </section>
+            <section class="hostel-strip">
+                <div class="strip-item">
+                    <strong>24/7 Support</strong><span>Hostel management support whenever assistance is required.</span>
+                </div>
+                <div class="strip-item">
+                    <strong>Clean Environment</strong>
+                    <span>Clean and hygienic hostel environment for residents.</span>
+                </div>
+                <div class="strip-item">
+                    <strong>Safe & Secure</strong><span>A secure and comfortable environment for every tenant.</span>
+                </div>
+            </section>
+        </div>
+        <footer>© 2026 Murugan Hostel |Tenant Portal</footer>
+        <script>
+        function toggleMenu() {
+            const navLinks =document.getElementById("navLinks");
+            navLinks.classList.toggle("show");
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Murugan Hostel - Admin Home</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:linear-gradient( 135deg, #0f172a, #1e3a8a, #2563eb);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            top: -180px;
+            left: -120px;
+            animation: circleMove 7s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -160px;
+            right: -100px;
+            animation: circleMove 8s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes circleMove {
+            from { transform: translateY(0px);}
+            to { transform: translateY(40px);}
+        }
+
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.35);
+            transition: 0.3s;
+        }
+
+        .brand:hover .brand-logo {
+            transform: rotate(-5deg) scale(1.08);
+        }
+
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: #2563eb;
+        }
+
+
+        .nav-links .logout {
+            margin-left: 10px;
+            border:1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-links .logout:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+
+        .hero {
+            min-height: calc(100vh - 75px);
+            padding: 60px 8%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 3;
+            animation: contentEntry 0.8s ease;
+        }
+
+        @keyframes contentEntry {
+            from {opacity: 0;transform: translateY(30px); }
+            to { opacity: 1;transform: translateY(0);}
+        }
+
+
+        .admin-label {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            border:1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            color: #bfdbfe;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-content h1 {
+            font-size: 55px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #60a5fa;
+        }
+
+
+        .hero-description {
+            max-width: 650px;
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .report-btn {
+            display: inline-block;
+            padding: 14px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow:0 8px 20px rgba(37, 99, 235, 0.35);
+            transition: 0.3s;
+        }
+
+        .report-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.50);
+        }
+
+        .report-btn:active {
+            transform: scale(0.97);
+        }
+
+
+        .background-logo {
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 370px;
+            height: 370px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border:3px solid rgba(255, 255, 255, 0.10);
+            border-radius: 80px;
+            background:rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 240px;
+            font-weight: bold;
+            user-select: none;
+            animation: logoFloat 5s ease-in-outinfinite alternate;
+        }
+
+        @keyframes logoFloat {
+            from {transform: translateY(-50%)rotate(-3deg); }
+            to {transform:translateY(-53%) rotate(3deg);}
+        }
+
+
+        .quick-info {
+            margin-top: 50px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .info-card {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.14);
+            transform: translateY(-5px);
+        }
+
+        .info-card strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .info-card span {
+            font-size: 12px;
+            color: #bfdbfe;
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+
+
+        @media (max-width: 900px) {
+            .background-logo {
+                width: 280px;
+                height: 280px;
+                font-size: 180px;
+                right: -60px;
+                opacity: 0.6;
+            }
+            .hero-content h1 {
+                font-size: 45px;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .navbar {padding: 0 5%;}
+            .menu-btn {
+                display: block;
+            }
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 20px;
+                background: #0f172a;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links .logout {
+                margin-left: 0;
+            }
+
+            .hero {
+                padding:60px 6%;
+                min-height: calc(100vh - 75px);
+            }
+
+            .hero-content h1 {
+                font-size: 38px;
+            }
+
+            .background-logo {
+                right: -80px;
+                opacity: 0.35;
+            }
+
+            .quick-info {
+                flex-direction: column;
+                max-width: 350px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .brand h2 {
+                font-size: 16px;
+            }
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+            }
+            .hero-content h1 {
+                font-size: 34px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .background-logo {
+                display: none;
+            }
+        }
+        </style>
+        </head>
+        <body>
+            <nav class="navbar">
+                <a href="{% url 'adminhome' %}" class="brand">
+                    <div class="brand-logo">M</div>
+                    <h2>MURUGAN HOSTEL</h2>
+                </a>
+                <button class="menu-btn"onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li>
+                        <a href="{% url 'adminhome' %}"class="active">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tenantdetails' %}">Tenant Details</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'reportdetails' %}">Report Details</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}" class="logout">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+            <main class="hero">
+                <div class="hero-content">
+                    <p class="admin-label">ADMIN DASHBOARD</p>
+                    <h1>Welcome to<span>Murugan Hostel</span></h1>
+                    <p class="hero-description"> Manage your hostel efficiently from one
+                        simple and secure dashboard.
+
+                        View and maintain tenant information,
+                        monitor tenant reports and keep hostel
+                        records organized.
+
+                        Murugan Hostel Management System makes
+                        everyday administration easier, faster
+                        and more convenient.
+                    </p>
+                    <div class="hero-buttons"><a href="{% url 'reportdetails' %}" class="report-btn" >View Report Details →</a>
+                    </div>
+                    <div class="quick-info">
+                        <div class="info-card"><strong>Tenant Management</strong>
+                            <span>View tenant information</span>
+                        </div>
+                        <div class="info-card"><strong>Reports</strong>
+                            <span>Monitor tenant reports</span>
+                        </div>
+                        <div class="info-card">
+                            <strong>Admin Control</strong>
+                            <span>Manage hostel records</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="background-logo">M</div>
+            </main>
+            <script>
+            function toggleMenu() {
+                const navLinks =document.getElementById("navLinks");
+                navLinks.classList.toggle("show");
+            }
+            </script>
+        </body>
+    </html>

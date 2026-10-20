@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title>Murugan Hostel - Tenant Details</title>
+    <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:linear-gradient( 135deg, #0f172a,  #1e3a8a, #2563eb);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            top: -170px;
+            left: -120px;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+            position: relative;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            color: white;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow:0 5px 15px rgba(37, 99, 235, 0.35);
+            transition: 0.3s;
+        }
+        .brand:hover .brand-logo {
+            transform:rotate(-5deg)scale(1.08);
+        }
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #2563eb;
+            transform:translateY(-2px);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: #2563eb;
+        }
+
+        .nav-links .logout {
+            margin-left: 10px;
+            border:1px solid rgba(255,255,255,0.25);
+        }
+
+        .nav-links .logout:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            padding: 50px 7%;
+            background:linear-gradient( 135deg,  #0f172a, #1e3a8a, #2563eb);
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            color: #bfdbfe;
+            font-size: 15px;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-info h2 {
+            color: #0f172a;
+            font-size: 23px;
+        }
+        .tenant-count {
+            padding: 10px 16px;
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:0 10px 30px rgba(15,23,42,0.08);
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+        thead {
+            background: #0f172a;
+            color: white;
+        }
+        th {
+            padding: 17px 15px;
+            text-align: left;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+        td {
+            padding: 16px 15px;
+            border-bottom:1px solid #e2e8f0;
+            color: #475569;
+            font-size: 14px;
+        }
+        tbody tr {
+            transition: 0.25s;
+        }
+        tbody tr:hover {
+            background: #eff6ff;
+        }
+        .username {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .payment {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            padding: 50px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .empty-message h3 {
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 25px;
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            font-size: 13px;
+        }
+        @media(max-width: 800px) {
+            .menu-btn {
+                display: block;
+            }
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 20px;
+                background: #0f172a;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links .logout {
+                margin-left: 0;
+            }
+            .top-info {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .navbar {
+                padding: 0 5%;
+            }
+            .brand h2 {
+                font-size: 16px;
+            }
+            .page-header {
+                padding:40px 5%;
+            }
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'adminhome' %}" class="brand">
+            <div class="brand-logo">M</div>
+            <h2>MURUGAN HOSTEL</h2>
+        </a>
+        <button class="menu-btn"onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{% url 'adminhome' %}"class="active">Home</a></li>
+            <li><a href="{% url 'tenantdetails' %}">Tenant Details</a></li>
+            <li><a href="{% url 'reportdetails' %}">Report Details</a></li>
+            <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <section class="page-header">
+        <h1>Tenant Details</h1>
+        <p>View and manage registered tenants of Murugan Hostel</p>
+    </section>
+    <main>
+        <div class="top-info">
+            <h2>Registered Tenants</h2>
+            <div class="tenant-count">Total Tenants:{{ tenants|length }}</div>
+        </div>
+        <div class="table-container">
+            {% if tenants %}
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>City</th>
+                            <th>Phone</th>
+                            <th>Aadhaar Number</th>
+                            <th>Username</th>
+                            <th>Payment</th>
+                            <th>Room No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tenant in tenants %}
+                        <tr>
+                            <td>{{ tenant.id }}</td>
+                            <td><b>{{ tenant.name }}</b></td>
+                            <td>{{ tenant.age }}</td>
+                            <td>{{ tenant.city }}</td>
+                            <td>{{ tenant.phone }}</td>
+                            <td>{{ tenant.aadhaar_number }}</td>
+                            <td class="username">{{ tenant.username }}</td>
+                            <td><span class="payment">{{ tenant.payment }}</span></td>
+                            <td>{{tenant.room_no}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-message">
+                <h3>No Tenants Found</h3>
+                <p>No tenants have registered yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>© 2026 Murugan Hostel |Admin Dashboard</footer>
+    <script>
+    function toggleMenu() {
+        const navLinks =document.getElementById("navLinks");
+        navLinks.classList.toggle("show");
+    }
+    </script>
+</body>
+
+</html>

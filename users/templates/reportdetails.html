@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title>Murugan Hostel - Report Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:linear-gradient( 135deg, #0f172a,  #1e3a8a, #2563eb);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            top: -170px;
+            left: -120px;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+            position: relative;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            color: white;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow:0 5px 15px rgba(37, 99, 235, 0.35);
+            transition: 0.3s;
+        }
+        .brand:hover .brand-logo {
+            transform:rotate(-5deg)scale(1.08);
+        }
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #2563eb;
+            transform:translateY(-2px);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: #2563eb;
+        }
+
+        .nav-links .logout {
+            margin-left: 10px;
+            border:1px solid rgba(255,255,255,0.25);
+        }
+
+        .nav-links .logout:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+        .page-header {
+            padding: 50px 7%;
+            background:linear-gradient(135deg,  #0f172a,  #1e3a8a, #2563eb);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::after {
+            content: "M";
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 190px;
+            font-weight: bold;
+            color: rgba(255,255,255,0.05);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            color: #bfdbfe;
+            font-size: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1350px;
+            margin: 40px auto;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .top-info h2 {
+            color: #0f172a;
+            font-size: 23px;
+        }
+
+        .report-count {
+            padding: 10px 17px;
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .message {
+            padding: 14px 17px;
+            margin-bottom: 20px;
+            background: #dcfce7;
+            color: #166534;
+            border:1px solid #86efac;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .table-container {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px  rgba(15,23,42,0.08);
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #0f172a;
+            color: white;
+        }
+
+        th {
+            padding: 17px 18px;
+            text-align: left;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+
+        td {
+            padding: 18px;
+            border-bottom:1px solid #e2e8f0;
+            color: #475569;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        tbody tr {
+            transition: 0.25s;
+        }
+
+        tbody tr:hover {
+            background: #eff6ff;
+        }
+
+        .report-about {
+            color: #0f172a;
+            font-weight: bold;
+        }
+        .description {
+            max-width: 430px;
+            line-height: 1.7;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .resolved {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .status-form select {
+            padding: 8px 10px;
+            border:1px solid #cbd5e1;
+            border-radius: 7px;
+            outline: none;
+            color: #334155;
+            background: white;
+            cursor: pointer;
+        }
+
+        .status-form select:focus {
+            border-color: #2563eb;
+        }
+
+        .update-btn {
+            padding: 9px 13px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .update-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow:0 5px 12px rgba(37,99,235,0.25);
+        }
+
+        .empty-message {
+            padding: 60px 20px;
+            text-align: center;
+            color: #64748b;
+        }
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            background: #dbeafe;
+            color: #2563eb;
+            border-radius: 15px;
+            font-size: 26px;
+        }
+
+        .empty-message h3 {
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 25px;
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        @media(max-width: 800px) {
+            .menu-btn {
+                display: block;
+            }
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 20px;
+                background: #0f172a;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links .logout {
+                margin-left: 0;
+            }
+            .top-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .navbar {
+                padding: 0 5%;
+            }
+            .brand h2 {
+                font-size: 16px;
+            }
+            .page-header {
+                padding: 40px 5%;
+            }
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'adminhome' %}" class="brand">
+            <div class="brand-logo">M</div>
+            <h2>MURUGAN HOSTEL</h2>
+        </a>
+        <button class="menu-btn"onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{% url 'adminhome' %}"class="active">Home</a></li>
+            <li><a href="{% url 'tenantdetails' %}">Tenant Details</a></li>
+            <li><a href="{% url 'reportdetails' %}">Report Details</a></li>
+            <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <section class="page-header">
+        <h1>Report Details</h1>
+        <p> View and manage complaints submitted by hostel tenants</p>
+    </section>
+    <main>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="message">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="top-info">
+            <h2>Tenant Reports</h2>
+            <div class="report-count">Total Reports:{{ reports|length }}</div>
+        </div>
+        <div class="table-container">
+            {% if reports %}
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>About</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in reports %}
+                        <tr>
+                        <td>
+                            #{{ report.id }}
+                        </td>
+                        <td class="report-about">
+                            {{ report.about }}
+                        </td>
+                        <td class="description">
+                            {{ report.description }}
+                        </td>
+                        <td>
+                            {% if report.status == "Resolved" %}
+                                <span class="status resolved"> Resolved
+                                </span>
+                            {% else %}
+                                <span class="status pending">
+                                    {{ report.status }}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="POST"action="{% url 'update_report_status' report.id %}" class="status-form">
+                                {% csrf_token %}
+                                <select name="status">
+                                    <option value="Pending" {% if report.status == "Pending" %} selected{% endif %}>
+                                        Pending
+                                    </option>
+                                    <option value="Resolved"{% if report.status == "Resolved" %} selected {% endif %}>
+                                        Resolved
+                                    </option>
+                                </select>
+                                <button type="submit" class="update-btn">Update</button>
+                            </form>
+                        </td>
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-message">
+                <div class="empty-icon">✓</div>
+                <h3>No Reports Found</h3>
+                <p>There are currently no complaints submitted by tenants.</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>© 2026 Murugan Hostel |Admin Dashboard</footer>
+    <script>
+    function toggleMenu() {
+        const navLinks =document.getElementById("navLinks");
+        navLinks.classList.toggle("show");
+    }
+    </script>
+</body>
+</html>

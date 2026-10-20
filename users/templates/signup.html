@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murugan Hostel - Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background:
+                linear-gradient( 135deg, #0f172a, #1e3a8a, #2563eb );
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: -120px;
+            left: -100px;
+            animation:
+                moveCircle 6s
+                ease-in-out
+                infinite alternate;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -70px;
+            animation:
+                moveCircle 7s
+                ease-in-out
+                infinite alternate;
+        }
+        @keyframes moveCircle {
+            from {  transform: translateY(0);}
+            to { transform: translateY(30px);}
+        }
+
+        .signup-container {
+            width: 650px;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.25);
+            transition: 0.4s;
+        }
+        .signup-container:hover {
+            transform: translateY(-7px);
+            box-shadow:
+                0 28px 60px
+                rgba(0, 0, 0, 0.30);
+        }
+
+        .hostel-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2563eb;
+            color: white;
+            border-radius: 18px;
+            font-size: 30px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.30);
+            transition: 0.3s;
+        }
+        .hostel-icon:hover {
+            transform: rotate(-5deg) scale(1.08);
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 28px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .welcome-text {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns:repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .input-group {
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border:
+                1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            background: #f8fafc;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+            transform: translateY(-2px);
+        }
+
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            width: 100%;
+            padding: 13px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .login-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top:1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .login-section a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 5px;
+            transition: 0.3s;
+        }
+        .login-section a:hover {
+            color: #1e3a8a;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .signup-container {
+                width: 95%;
+                padding: 30px 20px;
+            }
+            form {grid-template-columns: 1fr;}
+            .submit-btn {grid-column: auto;}
+            h1 {font-size: 24px;}
+        }
+    </style>
+    </head>
+    <body>
+        <div class="signup-container">
+            <div class="hostel-icon">M</div>
+            <h1>MURUGAN HOSTEL</h1>
+            <p class="welcome-text"> Create your tenant account to continue</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text"name="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Age</label>
+                    <input type="number"name="age" placeholder="Enter your age" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel"name="phone" placeholder="Enter phone number" required >
+                </div>
+                
+                <div class="input-group">
+                    <label>City</label>
+                    <input type="text" name="city" placeholder="Enter your city" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Aadhaar Number</label>
+                    <input type="text" name="aadhaar_number" placeholder="Enter Aadhaar number" maxlength="12"required>
+                </div>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Create username"required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input  type="password" name="password"placeholder="Create password"required>
+                </div>
+                <div class="input-group">
+                    <label >payment</label>
+                    <input type="text" name="payment" placeholder="enter paid or not" required>
+                </div>
+                <div class="input-group">
+                    <label >room no</label>
+                    <input type="text" name="room_no" placeholder="enter room no" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account </button>
+            </form>
+            <div class="login-section">
+                <span> Already have an account?</span>
+                <a href="{% url 'login' %}"> Login</a>
+            </div>
+        </div>
+    </body>
+    </html>
